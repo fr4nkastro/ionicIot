@@ -19,8 +19,8 @@
     </ion-label>
   </ion-item-divider>
   <div class="statusSystem">
-    <ion-progress-bar *ngIf="this._statusSystem" type="indeterminate"></ion-progress-bar>
-    <ion-progress-bar *ngIf="!this._statusSystem"></ion-progress-bar>
+    <ion-progress-bar *ngIf="!!this._statusData.sensor1" type="indeterminate"></ion-progress-bar>
+    <ion-progress-bar *ngIf="!this._statusData.sensor1"></ion-progress-bar>
     <label>
       <input [disabled]="true" [checked]="this._statusSystem" type="checkbox">
       <span>
@@ -28,8 +28,8 @@
       </span>
     </label>
     
-    <ion-progress-bar *ngIf="this._statusSystem" type="indeterminate" reversed="true"></ion-progress-bar>
-    <ion-progress-bar *ngIf="!this._statusSystem"></ion-progress-bar>
+    <ion-progress-bar *ngIf="!!this._statusData.sensor2" type="indeterminate" reversed="true"></ion-progress-bar>
+    <ion-progress-bar *ngIf="!this._statusData.sensor2"></ion-progress-bar>
 
   </div>
   
@@ -42,7 +42,7 @@
       </ion-label>
     </ion-item-divider>
     <ion-item>
-      <ion-toggle class="tooglePump" checked="{{!!(this._statusData.pump)}}" (ionChange)="requestData('1')" >
+      <ion-toggle [(ngModel)]="data.pump" class="tooglePump" checked="{{!!(this._statusData.pump)}}" (ionChange)="requestData('1')" >
         <span>
           <ion-icon name="bulb-outline"></ion-icon>
         </span>

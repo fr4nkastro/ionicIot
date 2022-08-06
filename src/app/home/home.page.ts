@@ -3,7 +3,7 @@ import {SArduinoService} from '../services/s-arduino.service'
 import { Observable } from 'rxjs';
 import { Stats } from '../interfaces/Stats';
 import { AlertController } from '@ionic/angular';
-
+import { AppData } from '../AppData';
 
 @Component({
   selector: 'app-home',
@@ -12,7 +12,7 @@ import { AlertController } from '@ionic/angular';
 })
 
 export class HomePage implements OnInit {
-  
+  data= new AppData(0);
   server="192.168.2.111"
   statusData : Observable<Stats>;
   _statusData : Stats;
