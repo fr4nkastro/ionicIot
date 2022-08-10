@@ -1,5 +1,8 @@
+import { Stats } from "./interfaces/Stats";
+
 export class AppData {
-    constructor(
-        public pump: number
+    constructor(public data: Stats
+        
     ) {}
+    
   }
