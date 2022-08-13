@@ -5,7 +5,7 @@ import { Stats } from '../interfaces/Stats';
 import { AlertController } from '@ionic/angular';
 import { AppData } from '../AppData';
 import { interval } from 'rxjs';
-import { delay } from 'rxjs/operators'
+
 
 
 const source$ =interval(1000);
@@ -18,7 +18,7 @@ const source$ =interval(1000);
 
 export class HomePage implements OnInit, AfterViewInit  {
   status : AppData;
-  server=''
+  server='192.168.43.63'
 
   _statusSystem : boolean;
   toogleButton: any;
@@ -89,7 +89,10 @@ export class HomePage implements OnInit, AfterViewInit  {
     const alert = await this.alertController.create({
       header: 'Configuración del Servidor',
       buttons: [ {text:'Cancel'},{text: 'OK',   handler: data  => {
-        this.server= data[0]; 
+        if(data[0]!=''){
+          this.server= data[0]; 
+        }
+          
         this.serviceArduino.getStatus(this.server, '0').subscribe((_data)=>{this.status = new AppData(_data);
           source$.subscribe(
             (x) => { if(this.server!=''){this.serviceArduino.getStatus(this.server,'0').subscribe((__data)=>{
@@ -130,7 +133,7 @@ export class HomePage implements OnInit, AfterViewInit  {
        }}],
       inputs: [
         {
-          placeholder: 'IP Address'
+          placeholder: '192.168.43.63'
         }
       ]
     });
