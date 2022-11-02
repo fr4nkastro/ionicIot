@@ -19,7 +19,7 @@ const source$ =interval(1000);
 export class HomePage implements OnInit, AfterViewInit  {
   status : AppData;
   server='192.168.43.63'
-
+  debugFlag:boolean = false;
   _statusSystem : boolean;
   toogleButton: any;
 
@@ -43,7 +43,8 @@ export class HomePage implements OnInit, AfterViewInit  {
 
 
   debugStatus(opt: number){
-    this.status.data.sensor2=1;
+    this.requestData('0');
+
     
   }
 
@@ -74,14 +75,47 @@ export class HomePage implements OnInit, AfterViewInit  {
    
   }
 
-  updateStatusSensors(){
-    if(this.status.data.sensor1 ==1 && this.status.data.sensor2==1){
-      this._statusSystem=true;
-    }
-    else{
-      this._statusSystem= false;
-    }
-  }
+  // updateStatusSensors(debugFlag){
+  //   if(debugFlag){
+  //     //Verificar estado de sensor 1
+  //     if(this.status.data.sensor1==1 && this.status.data.fan1==0){
+  //       //Encender fan1
+  //       this.requestData('2');
+  //     }
+  //     //Verificar estado de sensor 2
+  //     if(this.status.data.sensor2==1 && this.status.data.fan2==0){
+  //       //Encender fan2
+  //       this.requestData('3');
+  //     }
+
+      
+  //       setTimeout(
+  //         (function(scope){
+  //             return function(){
+  //               if(scope.status.data.pump==1)
+  //                 this.requestData('1');                
+  //       console.log('\n Bomba apagada----------------');};
+  //         })(this), 3000
+  //     );        
+  
+
+  //     if(this.status.data.sensor2==1){
+  //       this.requestData('3');
+        
+  //     }
+  //   }
+
+
+
+  //   if(this.status.data.sensor1 ==1 && this.status.data.sensor2==1){
+  //     this._statusSystem=true;
+
+  //   }
+  //   else{
+  //     this._statusSystem= false;
+
+  //   }
+  // }
 
 
   
@@ -101,7 +135,7 @@ export class HomePage implements OnInit, AfterViewInit  {
                 this.status.data.fan2 != __data.fan2 ||
                 this.status.data.sensor1 != __data.sensor1 ||
                 this.status.data.sensor2 != __data.sensor2 
-              ) {console.log('cambio detectado server-side');  this.updateStatusSensors();
+              ) {console.log('cambio detectado server-side');  /*this.updateStatusSensors();*/
               setTimeout(
                 (function(scope){
                     return function(){
@@ -112,7 +146,7 @@ export class HomePage implements OnInit, AfterViewInit  {
                           scope.status.data.sensor1 != __data.sensor1 ||
                           scope.status.data.sensor2 != __data.sensor2 
                         ){scope.status.data= __data;
-                          scope.updateStatusSensors();  
+                          // scope.updateStatusSensors();  
                           console.log(scope.status.data); 
                           console.log('cambio ejecutado server-side');}
                       });
