@@ -13,7 +13,7 @@ export class SArduinoService {
   }
 
   public getStatus(server: string, opt : string =""){
-    let url = "http://"+server+'/action?opt='+ opt;
+    let url = "http://"+server+'/'+opt;
     return this.http.get<Stats>(url);
   }
 

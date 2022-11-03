@@ -23,21 +23,19 @@ export class HomePage implements OnInit {
 
   ngOnInit(): void {
     this._statusData= new Stats;
-    this.requestData('0');
+    this.requestData('');
 
 
   } 
   debugStatus(opt: number){
     if(opt==1){
       this._statusData.pump=1;
-      this._statusData.sensor1=1;
-      this._statusData.sensor2=1;
+      this._statusData.ph=1;
       this.updateStatusSensors();
     }
     else{
       this._statusData.pump=0;
-      this._statusData.sensor1=0;
-      this._statusData.sensor2=0;
+      this._statusData.ph=0;
       this.updateStatusSensors();
     }
     
@@ -45,11 +43,7 @@ export class HomePage implements OnInit {
 
   powerOffSystem(){
       if(this._statusData.pump!=0)
-        this.requestData('1');
-      if(this._statusData.fan1!=0)        
-      this.requestData('2');
-      if(this._statusData.fan2!=0)
-        this.requestData('3');
+        this.requestData('pump');
 
   }
 
@@ -65,7 +59,7 @@ export class HomePage implements OnInit {
   }
 
   updateStatusSensors(){
-    if(this._statusData.sensor1 ==1 && this._statusData.sensor2==1){
+    if(this._statusData.ph ==1){
       this._statusSystem=true;
     }
     else{

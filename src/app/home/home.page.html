@@ -42,7 +42,7 @@
       </ion-label>
     </ion-item-divider>
     <ion-item>
-      <ion-toggle class="tooglePump" checked="{{!!(this._statusData.pump)}}" (ionChange)="requestData('1')" >
+      <ion-toggle class="tooglePump" checked="{{!!(this._statusData.pump)}}" (ionChange)="requestData('pump')" >
         <span>
           <ion-icon name="bulb-outline"></ion-icon>
         </span>
@@ -54,25 +54,25 @@
     </ion-item>
 
     <ion-item>
-      <ion-toggle class="toggleFan" checked="{{!!(this._statusData.fan1)}}" (ionChange)="requestData('2')" ></ion-toggle>
+      <ion-toggle class="toggleFan" checked="{{!!(this._statusData.ultrasonic)}}"  ></ion-toggle>
       <ion-thumbnail slot="start">
         <img src="../assets/img/fan.png">
       </ion-thumbnail>
-      <ion-label>Ventiladora #1</ion-label>
+      <ion-label>Sensor Capacitivo #1</ion-label>
     </ion-item>
 
 
     <ion-item>
-      <ion-toggle class="toggleFan" checked="{{!!(this._statusData.fan2)}}" (ionChange)="requestData('3')" ></ion-toggle>
+      <ion-toggle class="toggleFan" checked="{{!!(this._statusData.capacitive1)}}"  ></ion-toggle>
       <ion-thumbnail slot="start">
         <img src="../assets/img/fan.png">
       </ion-thumbnail>
-      <ion-label>Ventiladora #2</ion-label>
+      <ion-label>Sensor Capacitivo #2</ion-label>
     </ion-item>
 
     <ion-item-divider>
       <ion-label>
-        <ion-text color="medium"> Sensor #1</ion-text>
+        <ion-text color="medium"> Sensor Ph</ion-text>
       </ion-label>
     </ion-item-divider>
 
@@ -83,22 +83,11 @@
         <img src="../../assets/img/humidity.jpg">
       </ion-avatar>
       
-      <ion-progress-bar value="{{this._statusData.sensor1-0.1}}" buffer="0.05"></ion-progress-bar>
+      <ion-progress-bar value="{{this._statusData.ph-0.1}}" buffer="0.05"></ion-progress-bar>
     </ion-item>
     
 
-    <ion-item-divider>
-      <ion-label>
-        <ion-text color="medium"> Sensor #2</ion-text>
-      </ion-label>
-    </ion-item-divider>
-  
-    <ion-item>
-      <ion-avatar slot="start">
-        <img src="../../assets/img/humidity.jpg">
-      </ion-avatar>      
-      <ion-progress-bar value="{{this._statusData.sensor2-0.1}}" buffer="0.05"></ion-progress-bar>
-    </ion-item>
+
     
 
     </div>
