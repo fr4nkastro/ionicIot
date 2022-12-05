@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Stats } from '../interfaces/Stats';
+import { interval, timer } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SArduinoService {
-
+ 
 
   constructor(private http: HttpClient) { 
     
@@ -16,5 +17,7 @@ export class SArduinoService {
     let url = "http://"+server+'/'+opt;
     return this.http.get<Stats>(url);
   }
+
+
 
 }

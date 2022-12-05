@@ -4,7 +4,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content scroll-y="true" >
+<ion-content scroll-y="true"  >
 
 
   <ion-refresher slot="fixed">
@@ -18,9 +18,9 @@
       <ion-text color="medium"> Estado del Sistema</ion-text>
     </ion-label>
   </ion-item-divider>
-  <div class="statusSystem">
-    <ion-progress-bar *ngIf="this._statusSystem" type="indeterminate"></ion-progress-bar>
-    <ion-progress-bar *ngIf="!this._statusSystem"></ion-progress-bar>
+  <div class="statusSystem" *ngIf="this.status!=null">
+    <ion-progress-bar *ngIf="!!this.status.data.sensor1" type="indeterminate"></ion-progress-bar>
+    <ion-progress-bar *ngIf="!this.status.data.sensor1"></ion-progress-bar>
     <label>
       <input [disabled]="true" [checked]="this._statusSystem" type="checkbox">
       <span>
@@ -28,13 +28,13 @@
       </span>
     </label>
     
-    <ion-progress-bar *ngIf="this._statusSystem" type="indeterminate" reversed="true"></ion-progress-bar>
-    <ion-progress-bar *ngIf="!this._statusSystem"></ion-progress-bar>
+    <ion-progress-bar *ngIf="!!this.status.data.sensor2" type="indeterminate" reversed="true"></ion-progress-bar>
+    <ion-progress-bar *ngIf="!this.status.data.sensor2"></ion-progress-bar>
 
   </div>
   
 
-  <div class="custom-content">
+  <div class="custom-content" *ngIf="this.status!=null">
     
     <ion-item-divider>
       <ion-label>
@@ -42,7 +42,7 @@
       </ion-label>
     </ion-item-divider>
     <ion-item>
-      <ion-toggle class="tooglePump" checked="{{!!(this._statusData.pump)}}" (ionChange)="requestData('pump')" >
+      <ion-toggle  [(ngModel)]="this.status.data.pump" id="tooglePump"  (ngModelChange)="requestData('1')" >
         <span>
           <ion-icon name="bulb-outline"></ion-icon>
         </span>
@@ -54,7 +54,7 @@
     </ion-item>
 
     <ion-item>
-      <ion-toggle class="toggleFan" checked="{{!!(this._statusData.ultrasonic)}}"  ></ion-toggle>
+      <ion-toggle class="toggleFan" checked="{{!!(this._statusData.fan1)}}" (ionChange)="requestData('2')" ></ion-toggle>
       <ion-thumbnail slot="start">
         <img src="../assets/img/fan.png">
       </ion-thumbnail>
@@ -63,7 +63,7 @@
 
 
     <ion-item>
-      <ion-toggle class="toggleFan" checked="{{!!(this._statusData.capacitive1)}}"  ></ion-toggle>
+      <ion-toggle class="toggleFan"  [(ngModel)]="this.status.data.fan2" (ngModelChange)="requestData('3')" ></ion-toggle>
       <ion-thumbnail slot="start">
         <img src="../assets/img/fan.png">
       </ion-thumbnail>
@@ -83,11 +83,22 @@
         <img src="../../assets/img/humidity.jpg">
       </ion-avatar>
       
-      <ion-progress-bar value="{{this._statusData.ph-0.1}}" buffer="0.05"></ion-progress-bar>
+      <ion-progress-bar value="{{this.status.data.sensor1-0.1}}" buffer="0.05"></ion-progress-bar>
     </ion-item>
     
 
-
+    <ion-item-divider>
+      <ion-label>
+        <ion-text color="medium"> Sensor #2</ion-text>
+      </ion-label>
+    </ion-item-divider>
+  
+    <ion-item>
+      <ion-avatar slot="start">
+        <img src="../../assets/img/humidity.jpg">
+      </ion-avatar>      
+      <ion-progress-bar value="{{this.status.data.sensor2-0.1}}" buffer="0.05"></ion-progress-bar>
+    </ion-item>
     
 
     </div>
