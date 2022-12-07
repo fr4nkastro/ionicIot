@@ -10,6 +10,8 @@ void updateSensor(){
   digitalWrite(pFan1, sFan1);
   digitalWrite(pFan2, sFan2);
   digitalWrite(pRelay, sRelay);
+  digitalWrite(pAereo, sAereo);
+  digitalWrite(pSubterraneo, sSubterraneo);
   
 }
 
@@ -21,7 +23,9 @@ void setup(void)
   sRelay=0;
   sHumiditySensor=0;
   sHumiditySensor2=0;
-  
+  sAereo=0;
+  sSubterraneo=0;
+ 
   sPushEmergency=0;
   Serial.begin(velocidadBaudios);
   
@@ -30,7 +34,9 @@ void setup(void)
   pinMode(pFan2, OUTPUT);
   pinMode(pRelay, OUTPUT);
   pinMode(pPushEmergency, INPUT);
-
+  pinMode(pAereo, OUTPUT);
+  pinMode(pSubterraneo, OUTPUT);
+  Serial.print('r');
 
   updateSensor();
  
@@ -54,6 +60,8 @@ void setup(void)
 
 
 void checkSerialData(){
+  int indexTerminator;
+  String value ;
  while (Serial.available() > 0)
  {
    //Create a place to hold the incoming message
@@ -79,11 +87,13 @@ void checkSerialData(){
 
      //Print the message (or do other things)
     Serial.println("Input: "+serialInput);
-    int indexTerminator = serialInput.indexOf(":");
+    indexTerminator = serialInput.indexOf(":");
       if(indexTerminator != -1){
         //Extraer comando
         currentCommand= serialInput.substring(0,indexTerminator);
-        Serial.println("Command: " +currentCommand);    
+        value=serialInput.substring(indexTerminator+ 1,serialInput.length()-1);
+        Serial.println("Command: " +currentCommand);   
+        Serial.println("Value: "+value);
       }
 
      //Reset for the next message
@@ -93,18 +103,20 @@ void checkSerialData(){
 
     switch (currentCommand[0]) {
     case 'h':
-        Serial.println("Actualizar sensor de humedad 1");
-      break;
+      sHumiditySensor= value.toInt();
+    break;
     case 'H':
-      Serial.println("Actualizar sensor de humedad 2");
+      sHumiditySensor2 = value.toInt();
       break;
     case 'V':
-      Serial.println("Actualizar valor de volumen");
+      sVolume= value.toInt();
     break;
     case 'C':
-      Serial.println("Actualizar valor del caudal");
+      sCaudalSensor = value.toFloat();
     break;
-    //Pendiente ingresar sensor temperatura
+    case 'T':
+      sTemperature = value.toFloat();
+    break;
     default:
 
     break;
