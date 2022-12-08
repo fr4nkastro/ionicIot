@@ -27,14 +27,8 @@ export class HomePage implements OnInit, AfterViewInit  {
  
 
   ngOnInit(): void {
-<<<<<<< HEAD
-    this._statusData= new Stats;
-    this.requestData('');
-
-=======
     this.status=null;
     this.presentAlert();
->>>>>>> version2-alpha
 
    
    
@@ -49,34 +43,15 @@ export class HomePage implements OnInit, AfterViewInit  {
 
 
   debugStatus(opt: number){
-<<<<<<< HEAD
-    if(opt==1){
-      this._statusData.pump=1;
-      this._statusData.ph=1;
-      this.updateStatusSensors();
-    }
-    else{
-      this._statusData.pump=0;
-      this._statusData.ph=0;
-      this.updateStatusSensors();
-    }
-=======
     this.requestData('0');
 
->>>>>>> version2-alpha
     
   }
 
   powerOffSystem(){
-<<<<<<< HEAD
-      if(this._statusData.pump!=0)
-        this.requestData('pump');
-
-=======
     this.status.data.pump=0;
     this.status.data.fan1=0;
     this.status.data.fan2=0;
->>>>>>> version2-alpha
   }
 
 
@@ -100,16 +75,6 @@ export class HomePage implements OnInit, AfterViewInit  {
    
   }
 
-<<<<<<< HEAD
-  updateStatusSensors(){
-    if(this._statusData.ph ==1){
-      this._statusSystem=true;
-    }
-    else{
-      this._statusSystem= false;
-    }
-  }
-=======
   // updateStatusSensors(debugFlag){
   //   if(debugFlag){
   //     //Verificar estado de sensor 1
@@ -152,7 +117,6 @@ export class HomePage implements OnInit, AfterViewInit  {
   //   }
   // }
 
->>>>>>> version2-alpha
 
   
   async presentAlert() {
@@ -169,8 +133,8 @@ export class HomePage implements OnInit, AfterViewInit  {
               if( this.status.data.pump != __data.pump ||
                 this.status.data.fan1 != __data.fan1 ||
                 this.status.data.fan2 != __data.fan2 ||
-                this.status.data.sensor1 != __data.sensor1 ||
-                this.status.data.sensor2 != __data.sensor2 
+                this.status.data.humidity1 != __data.humidity1 ||
+                this.status.data.humidity2 != __data.humidity2 
               ) {console.log('cambio detectado server-side');  /*this.updateStatusSensors();*/
               setTimeout(
                 (function(scope){
@@ -179,8 +143,8 @@ export class HomePage implements OnInit, AfterViewInit  {
                         if( scope.status.data.pump != __data.pump ||
                           scope.status.data.fan1 != __data.fan1 ||
                           scope.status.data.fan2 != __data.fan2 ||
-                          scope.status.data.sensor1 != __data.sensor1 ||
-                          scope.status.data.sensor2 != __data.sensor2 
+                          scope.status.data.humidity1 != __data.humidity1 ||
+                          scope.status.data.humidity2 != __data.humidity2 
                         ){scope.status.data= __data;
                           // scope.updateStatusSensors();  
                           console.log(scope.status.data); 
