@@ -15,16 +15,19 @@ void updateSensor(){
   
 }
 
+
+
 void setup(void) 
 {
-  sPump=0;
-  sFan1=0;
-  sFan2=0;
-  sRelay=0;
+  sPump=1;
+  sFan1=1;
+  sFan2=1;
+  sRelay=1;
   sHumiditySensor=0;
   sHumiditySensor2=0;
-  sAereo=0;
-  sSubterraneo=0;
+  sAereo=1;
+  sSubterraneo=1;
+
  
   sPushEmergency=0;
   Serial.begin(velocidadBaudios);

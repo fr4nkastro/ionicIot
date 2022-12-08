@@ -3,7 +3,9 @@ export class Stats {
     fan1: number;
     fan2: number;
     relay: number;
-    sensor1: number;
-    sensor2: number;
+    humidity1: number;
+    humidity2: number;
+    aereo:number;
+    terrestre: number;
   }
   

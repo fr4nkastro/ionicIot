@@ -18,7 +18,7 @@ const source$ =interval(1000);
 
 export class HomePage implements OnInit, AfterViewInit  {
   status : AppData;
-  server='192.168.43.63'
+  server='192.168.15.63'
   debugFlag:boolean = false;
   _statusSystem : boolean;
   toogleButton: any;
@@ -49,9 +49,11 @@ export class HomePage implements OnInit, AfterViewInit  {
   }
 
   powerOffSystem(){
-    this.status.data.pump=0;
-    this.status.data.fan1=0;
-    this.status.data.fan2=0;
+    this.status.data.pump=1;
+    this.status.data.fan1=1;
+    this.status.data.fan2=1;
+    this.status.data.aereo=1;
+    this.status.data.terrestre=1;
   }
 
 
@@ -60,7 +62,9 @@ export class HomePage implements OnInit, AfterViewInit  {
       this.serviceArduino.getStatus(this.server, '0').subscribe((data)=>{
         if( this.status.data.pump != data.pump ||
             this.status.data.fan1 != data.fan1 ||
-            this.status.data.fan2 != data.fan2
+            this.status.data.fan2 != data.fan2 ||
+            this.status.data.aereo != data.aereo /*||
+            this.status.data.terrestre != data.terrestre */
           )
           {
             console.log('cambio detectado')
@@ -133,8 +137,10 @@ export class HomePage implements OnInit, AfterViewInit  {
               if( this.status.data.pump != __data.pump ||
                 this.status.data.fan1 != __data.fan1 ||
                 this.status.data.fan2 != __data.fan2 ||
-                this.status.data.sensor1 != __data.sensor1 ||
-                this.status.data.sensor2 != __data.sensor2 
+                this.status.data.humidity1 != __data.humidity1 ||
+                this.status.data.humidity2 != __data.humidity2 ||
+                this.status.data.aereo != data.aereo /*||
+                this.status.data.terrestre != data.terrestre*/
               ) {console.log('cambio detectado server-side');  /*this.updateStatusSensors();*/
               setTimeout(
                 (function(scope){
@@ -143,8 +149,10 @@ export class HomePage implements OnInit, AfterViewInit  {
                         if( scope.status.data.pump != __data.pump ||
                           scope.status.data.fan1 != __data.fan1 ||
                           scope.status.data.fan2 != __data.fan2 ||
-                          scope.status.data.sensor1 != __data.sensor1 ||
-                          scope.status.data.sensor2 != __data.sensor2 
+                          scope.status.data.humidity1 != __data.humidity1 ||
+                          scope.status.data.humidity2 != __data.humidity2 ||
+                          scope.status.data.aereo != data.aereo /*||
+                          scope.status.data.terrestre != data.terrestre*/
                         ){scope.status.data= __data;
                           // scope.updateStatusSensors();  
                           console.log(scope.status.data); 
@@ -155,7 +163,6 @@ export class HomePage implements OnInit, AfterViewInit  {
               console.log('----------------');};
                 })(this), 1000
             );
-                // setTimeout(function(){console.log(this.status.data) }, 1000);
 
             }
 
@@ -167,7 +174,7 @@ export class HomePage implements OnInit, AfterViewInit  {
        }}],
       inputs: [
         {
-          placeholder: '192.168.43.63'
+          placeholder: this.server
         }
       ]
     });

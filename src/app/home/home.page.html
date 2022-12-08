@@ -19,8 +19,8 @@
     </ion-label>
   </ion-item-divider>
   <div class="statusSystem" *ngIf="this.status!=null">
-    <ion-progress-bar *ngIf="!!this.status.data.sensor1" type="indeterminate"></ion-progress-bar>
-    <ion-progress-bar *ngIf="!this.status.data.sensor1"></ion-progress-bar>
+    <ion-progress-bar *ngIf="!!this.status.data.humidity1" type="indeterminate"></ion-progress-bar>
+    <ion-progress-bar *ngIf="!this.status.data.humidity1"></ion-progress-bar>
     <label>
       <input [disabled]="true" [checked]="this._statusSystem" type="checkbox">
       <span>
@@ -28,8 +28,8 @@
       </span>
     </label>
     
-    <ion-progress-bar *ngIf="!!this.status.data.sensor2" type="indeterminate" reversed="true"></ion-progress-bar>
-    <ion-progress-bar *ngIf="!this.status.data.sensor2"></ion-progress-bar>
+    <ion-progress-bar *ngIf="!!this.status.data.humidity2" type="indeterminate" reversed="true"></ion-progress-bar>
+    <ion-progress-bar *ngIf="!this.status.data.humidity2"></ion-progress-bar>
 
   </div>
   
@@ -70,9 +70,25 @@
       <ion-label>Ventiladora #2</ion-label>
     </ion-item>
 
+    <ion-item>
+      <ion-toggle [(ngModel)]="this.status.data.aereo" (ngModelChange)="requestData('6')" ></ion-toggle>
+      <ion-thumbnail slot="start">
+        <img src="../assets/img/riegoAereo.png">
+      </ion-thumbnail>
+      <ion-label>Riego Aéreo</ion-label>
+    </ion-item>
+
+    <ion-item>
+      <ion-toggle  [(ngModel)]="this.status.data.terrestre" (ngModelChange)="requestData('5')" ></ion-toggle>
+      <ion-thumbnail slot="start">
+        <img src="../assets/img/riegoTerrestre.png">
+      </ion-thumbnail>
+      <ion-label>Riego Subterráneo</ion-label>
+    </ion-item>
+
     <ion-item-divider>
       <ion-label>
-        <ion-text color="medium"> Sensor #1</ion-text>
+        <ion-text color="medium"> Sensor Humedad #1</ion-text>
       </ion-label>
     </ion-item-divider>
 
@@ -83,13 +99,13 @@
         <img src="../../assets/img/humidity.jpg">
       </ion-avatar>
       
-      <ion-progress-bar value="{{this.status.data.sensor1-0.1}}" buffer="0.05"></ion-progress-bar>
+      <ion-progress-bar value="{{this.status.data.humidity1-0.1}}" buffer="0.05"></ion-progress-bar>
     </ion-item>
     
 
     <ion-item-divider>
       <ion-label>
-        <ion-text color="medium"> Sensor #2</ion-text>
+        <ion-text color="medium"> Sensor Humedad #2</ion-text>
       </ion-label>
     </ion-item-divider>
   
@@ -97,7 +113,7 @@
       <ion-avatar slot="start">
         <img src="../../assets/img/humidity.jpg">
       </ion-avatar>      
-      <ion-progress-bar value="{{this.status.data.sensor2-0.1}}" buffer="0.05"></ion-progress-bar>
+      <ion-progress-bar value="{{this.status.data.humidity2-0.1}}" buffer="0.05"></ion-progress-bar>
     </ion-item>
     
 
