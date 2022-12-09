@@ -5,9 +5,11 @@ String currentCommand;
 const unsigned int MAX_MESSAGE_LENGTH =10;
 
 
-const char* ssid     = "1";
-const char* password = "12345678";
+// const char* ssid     = "1";
+// const char* password = "12345678";
 
+const char* ssid     = "CASTLE24";
+const char* password = "service-castle24";
 
 const char* hostname = "ESP8266_1";
 
@@ -37,8 +39,8 @@ const int pPump= 2;     //D4
 const int pFan1= 14;    //D5
 const int pFan2= 12;    //D6
 const int pRelay= 13;   //D7
-const int pSubterraneo = 20; //D1
-const int pAereo = 19; //D2
+const int pSubterraneo = 5; //D1
+const int pAereo = 4; //D2
 
 
 const int pPushEmergency= 0;  //D3

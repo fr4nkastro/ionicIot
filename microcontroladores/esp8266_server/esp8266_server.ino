@@ -6,7 +6,6 @@
 
 void updateSensor(){
    digitalWrite(pPump, sPump);
-  digitalWrite(pBuiltInLed, sBuiltInLed);
   digitalWrite(pFan1, sFan1);
   digitalWrite(pFan2, sFan2);
   digitalWrite(pRelay, sRelay);
@@ -112,17 +111,19 @@ void checkSerialData(){
       sHumiditySensor2 = value.toInt();
       break;
     case 'V':
-      sVolume= value.toInt();
+      sVolume= value.toFloat();
     break;
     case 'C':
       sCaudalSensor = value.toFloat();
     break;
     case 'T':
-      sTemperature = value.toFloat();
+      float tempVal = value.toFloat();
+      if (tempVal != 0){
+        sTemperature = tempVal;
+      }
+      
     break;
-    default:
 
-    break;
   }
 }
 }

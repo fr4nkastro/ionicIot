@@ -1,7 +1,7 @@
 .custom-content{
   margin-top: 7vh;
   margin-left: 5vw;
-  margin-right: 5vw;
+  margin-right: 0vw;
 
   display: flex;
   justify-content: center;
@@ -72,4 +72,25 @@ label input:checked ~ span ion-icon {
   margin-left: 2vw;
   display: flex;
   
+}
+
+
+.sub-container{
+  display: flex;
+  flex-flow: row;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+
+.card-sensors{
+  margin-top: 13vh;
+  max-width: 300vw;
+  min-width: 25vw;
+
+}
+
+.sensores-humedad{
+  margin-top: 2%;
+  margin-left: 15%;
+  margin-right: 15%;
 }

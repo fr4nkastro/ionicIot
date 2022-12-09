@@ -13,14 +13,14 @@
     </ion-refresher-content>
   </ion-refresher>
   
-  <ion-item-divider>
+  <ion-item-divider *ngIf="this.status!=null">
     <ion-label>
       <ion-text color="medium"> Estado del Sistema</ion-text>
     </ion-label>
   </ion-item-divider>
   <div class="statusSystem" *ngIf="this.status!=null">
-    <ion-progress-bar *ngIf="!!this.status.data.humidity1" type="indeterminate"></ion-progress-bar>
-    <ion-progress-bar *ngIf="!this.status.data.humidity1"></ion-progress-bar>
+    <ion-progress-bar *ngIf="!!this.status.data.humedad1" type="indeterminate"></ion-progress-bar>
+    <ion-progress-bar *ngIf="!this.status.data.humedad2"></ion-progress-bar>
     <label>
       <input [disabled]="true" [checked]="this._statusSystem" type="checkbox">
       <span>
@@ -28,14 +28,14 @@
       </span>
     </label>
     
-    <ion-progress-bar *ngIf="!!this.status.data.humidity2" type="indeterminate" reversed="true"></ion-progress-bar>
-    <ion-progress-bar *ngIf="!this.status.data.humidity2"></ion-progress-bar>
+    <ion-progress-bar *ngIf="!!this.status.data.humedad1" type="indeterminate" reversed="true"></ion-progress-bar>
+    <ion-progress-bar *ngIf="!this.status.data.humedad2"></ion-progress-bar>
 
   </div>
   
-
+<div class="sub-container"> 
   <div class="custom-content" *ngIf="this.status!=null">
-    
+        
     <ion-item-divider>
       <ion-label>
         <ion-text color="medium"> Panel de Control</ion-text>
@@ -85,39 +85,65 @@
       </ion-thumbnail>
       <ion-label>Riego Subterráneo</ion-label>
     </ion-item>
+  </div>
 
-    <ion-item-divider>
-      <ion-label>
-        <ion-text color="medium"> Sensor Humedad #1</ion-text>
-      </ion-label>
-    </ion-item-divider>
 
-   
-    <ion-item>
-      
-      <ion-avatar slot="start">
-        <img src="../../assets/img/humidity.jpg">
-      </ion-avatar>
-      
-      <ion-progress-bar value="{{this.status.data.humidity1-0.1}}" buffer="0.05"></ion-progress-bar>
-    </ion-item>
-    
+  <div class="card-sensors" *ngIf="this.status!=null">
+    <ion-card>
+      <ion-item>
+        <ion-thumbnail slot="start">
+          <img src="../assets/img/temperatura.png">
+        </ion-thumbnail>
+        <ion-label>Temperatura : {{this.status.data.temperatura}}°C </ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-thumbnail slot="start">
+          <img src="../assets/img/caudal.png">
+        </ion-thumbnail>
+        <ion-label>Caudal : {{this.status.data.caudal}} L/m </ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-thumbnail slot="start">
+          <img src="../assets/img/litro.png">
+        </ion-thumbnail>
+        <ion-label>Volumen : {{this.status.data.volume}} L </ion-label>
+      </ion-item>
+    </ion-card>
+  </div>
 
-    <ion-item-divider>
-      <ion-label>
-        <ion-text color="medium"> Sensor Humedad #2</ion-text>
-      </ion-label>
-    </ion-item-divider>
-  
-    <ion-item>
-      <ion-avatar slot="start">
-        <img src="../../assets/img/humidity.jpg">
-      </ion-avatar>      
-      <ion-progress-bar value="{{this.status.data.humidity2-0.1}}" buffer="0.05"></ion-progress-bar>
-    </ion-item>
-    
+</div>
 
-    </div>
+<div class="sensores-humedad" *ngIf="this.status!=null" >
+        <ion-item-divider>
+          <ion-label>
+            <ion-text color="medium"> Sensor Humedad #1: {{this.status.data.humedad1}}%</ion-text>
+          </ion-label>
+        </ion-item-divider>
+
+
+        <ion-item>
+          
+          <ion-avatar slot="start">
+            <img src="../../assets/img/humidity.jpg">
+          </ion-avatar>
+          
+          <ion-progress-bar value="{{this.status.data.humedad1-0.1}}" buffer="0.05"></ion-progress-bar>
+        </ion-item>
+
+
+        <ion-item-divider>
+          <ion-label>
+            <ion-text color="medium"> Sensor Humedad #2: {{this.status.data.humedad2}}%</ion-text>
+          </ion-label>
+        </ion-item-divider>
+
+        <ion-item>
+          <ion-avatar slot="start">
+            <img src="../../assets/img/humidity.jpg">
+          </ion-avatar>      
+          <ion-progress-bar value="{{this.status.data.humedad2-0.1}}" buffer="0.05"></ion-progress-bar>
+        </ion-item>
+      </div>
 
     <ion-fab vertical="start" horizontal="end" edge slot="fixed">
       <ion-fab-button>
@@ -125,8 +151,14 @@
       </ion-fab-button>
       <ion-fab-list side="bottom">
         <ion-fab-button (click)="powerOffSystem()"><ion-icon name="power-outline"></ion-icon></ion-fab-button>
-        <ion-fab-button (click)="presentAlert()" ><ion-icon name="settings-outline"></ion-icon></ion-fab-button>
-        <ion-fab-button (click)="debugStatus(1)" ><ion-icon name="bug"></ion-icon></ion-fab-button>
+        <ion-fab-button (click)="presentAlert()" ><ion-icon name="wifi-outline"></ion-icon></ion-fab-button>
+        <ion-fab-button (click)="presentAlertTemperature()" ><ion-icon name="thermometer-outline"></ion-icon></ion-fab-button>
+        <ion-fab-button (click)="presentAlertHumidity()"><ion-icon name="rainy-outline"></ion-icon></ion-fab-button>
+        <ion-fab-button (click)="presentAlertTime()"><ion-icon name="alarm"></ion-icon></ion-fab-button>
+        <ion-fab-button (click)="presentAlertTipoRiego()"> <ion-icon name="code-download"></ion-icon></ion-fab-button>
+        <ion-fab-button (click)="enableAutomatic()"><ion-icon name="logo-android"></ion-icon></ion-fab-button>
+        <ion-fab-button (click)="disableAutomatic()"><ion-icon name="person"></ion-icon></ion-fab-button>
+        
       </ion-fab-list>
 
     </ion-fab>

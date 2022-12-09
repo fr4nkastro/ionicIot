@@ -66,7 +66,4 @@ void InitServer() {
   // Iniciar servidor
   server.begin();
   Serial.println("Servidor Iniciado");
-  Serial.print("LED_BUILTIN: ");
-  Serial.print(LED_BUILTIN);
-  Serial.println();
 }
