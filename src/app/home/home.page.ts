@@ -20,7 +20,7 @@ const source$ =interval(3000);
 
 export class HomePage implements OnInit, AfterViewInit  {
   status : AppData;
-  server='192.168.1.17'
+  server='192.168.47.63'
   debugFlag:boolean = false;
   _statusSystem : boolean;
   toogleButton: any;
@@ -41,12 +41,13 @@ export class HomePage implements OnInit, AfterViewInit  {
 
   ngOnInit(): void {
     this.status=null;
-    this.tipoRiego='terrestre';
+    this.tipoRiego='apagado';
     this.presentAlert();
     this.timeStart='';
     this.timeEnd='';
     this.temperaturaStart=0;
     this.temperaturaEnd=0;
+    this.automatic= false;
     
   } 
 
@@ -77,24 +78,32 @@ export class HomePage implements OnInit, AfterViewInit  {
       console.log('Ejecuta terrestre');
       this.status.data.terrestre=1;
     }
-    if(this.tipoRiego=='aereo'){
+    else if(this.tipoRiego=='aereo'){
       this.status.data.aereo=1;
       console.log('Ejecuta aereo');
     }
-    if(this.tipoRiego=='ambos'){
+    else if(this.tipoRiego=='ambos'){
       console.log('Ejecuta Ambos');
       this.status.data.aereo=1;
       this.status.data.terrestre=1;
+    }
+    else{
+      console.log('Apagado');
+      this.tipoRiego= 'apagado';
+      this.status.data.aereo=0;
+      this.status.data.terrestre=0;
     }
   }
 
 
   powerOffSystem(){
+    this.automatic=false;
     this.status.data.pump=0;
     this.status.data.fan1=0;
     this.status.data.fan2=0;
     this.status.data.aereo=0;
     this.status.data.terrestre=0;
+    this._statusSystem=false;
   }
   startFans(){
     this.status.data.fan1=1;
@@ -178,24 +187,26 @@ export class HomePage implements OnInit, AfterViewInit  {
                     this.checkTipoRiego();
                     console.log('Encendido automatico por umbral de tiempo');
                   }}
-                  
-                  if(this.timeEnd != ''){
-                    this.now= new Date();
-                    this.nowHour = this.now.getHours();
-                    this.nowMins = this.now.getMinutes();
-                    if(this.nowHour== Number(this.timeEnd.substring(0, this.timeEnd.indexOf(':'))) &&
-                    this.nowMins == Number(this.timeEnd.substring(this.timeEnd.indexOf(':')+1, this.timeEnd.length))){
-                      this.status.data.pump=0;
-                      this.offTipoRiego();
-                      console.log('Apagado automatico por umbral de tiempo');
-                    }}
-                  //Temperatura
+                  if(this.automatic==true){
+                    if(this.timeEnd != ''){
+                      this.now= new Date();
+                      this.nowHour = this.now.getHours();
+                      this.nowMins = this.now.getMinutes();
+                      if(this.nowHour== Number(this.timeEnd.substring(0, this.timeEnd.indexOf(':'))) &&
+                      this.nowMins == Number(this.timeEnd.substring(this.timeEnd.indexOf(':')+1, this.timeEnd.length))){
+                        this.status.data.pump=0;
+                        this.offTipoRiego();
+                        console.log('Apagado automatico por umbral de tiempo');
+                      }}
+
+                                        //Temperatura
                   console.log(this.temperaturaStart, __data.temperatura, this.temperaturaEnd);
-                  if((__data.temperatura >=  this.temperaturaStart &&  __data.temperatura <= this.temperaturaEnd )&& this.automatic){
+                  if((__data.temperatura >=  this.temperaturaStart &&  __data.temperatura <= this.temperaturaEnd )){
                     this.startFans();
                     console.log('Start Fans')
                   }else if(this.automatic){
                     this.stopFans();
+                    console.log('Apagado de ventiladores automático')
                   }
                   
                   if(__data.pump ==1){
@@ -204,6 +215,9 @@ export class HomePage implements OnInit, AfterViewInit  {
                   }else{
                     this._statusSystem = false;
                   }
+                  }
+                 
+
 
 
               if( this.status.data.pump != __data.pump ||
@@ -284,6 +298,11 @@ export class HomePage implements OnInit, AfterViewInit  {
           label: 'Ambos',
           type: 'radio',
           value: 'ambos',
+        },
+        {
+          label: 'Apagado',
+          type: 'radio',
+          value: 'apagado',
         },
       ],
     });

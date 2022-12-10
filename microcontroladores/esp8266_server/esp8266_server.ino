@@ -45,21 +45,6 @@ void setup(void)
   ConnectWiFi_STA();
   InitServer();
 }
- 
-
-
- // if(!digitalRead(pPushEmergency)){
- //   Serial.println("Push PRessed");
- //   sPump=0;
- //   sFan1=0;
- //   sFan2=0;
- //   sRelay=0;
- //   sBuiltInLed=0;
- //   updateSensor();
- // }
-
-  
-
 
 void checkSerialData(){
   int indexTerminator;
@@ -96,14 +81,7 @@ void checkSerialData(){
         value=serialInput.substring(indexTerminator+ 1,serialInput.length()-1);
         Serial.println("Command: " +currentCommand);   
         Serial.println("Value: "+value);
-      }
-
-     //Reset for the next message
-     message_pos = 0;
-   }
-  
-
-    switch (currentCommand[0]) {
+            switch (currentCommand[0]) {
     case 'h':
       sHumiditySensor= value.toInt();
     break;
@@ -125,6 +103,15 @@ void checkSerialData(){
     break;
 
   }
+
+      }
+
+     //Reset for the next message
+     message_pos = 0;
+   }
+  
+
+
 }
 }
 
